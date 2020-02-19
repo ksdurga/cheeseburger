@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="jumbotron" align="center">
+    <h1 class="display-4">BRGRS</h1> <img src="/assets/images/burger.png" width="120px" height="120px">
+    <p class="lead">For BRGRS</p>
+    <hr class="my-4">
+    
+    {{!-- <a class="btn btn-primary btn-lg" role="button">Learn more</a> --}}
+  </div>
+
+  <h4 align="center">Add a burger</h4>
+
+  <form id="createburger" class="button-size" align="center">
+    <input type="text" name="name" placeholder="brgr here"></textarea>
+    </br>
+    </br>
+    <button type="submit" class="btn btn-primary">Save Burger</button>
+  </form>
+
+  </br>
+
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h1>Brgrs to Eat</h1>
+          {{#each burgers if eaten=false}}
+
+          {{/each}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="card">
+        <div class="card-body">
+          <h1>Brgrs Eaten</h1>
+          {{#each burgers}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#createemployee").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+
+    // [name=employee] will find an element with a "name" attribute equal to the string "employee"
+    var newemployee = {
+      first_name: $("#createemployee [name=first_name]").val().trim(),
+      last_name: $("#createemployee [name=last_name]").val().trim(),
+      role_id: $("#createemployee [name=role_id]").val().trim(),
+      manager_id: $("#createemployee [name=manager_id]").val().trim()
+    };
+
+    // Send the POST request.
+    $.post("/api/employees", newemployee)
+    .then(
+      function() {
+        console.log("created new employee");
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+
+  $("#updateemployee").on("submit", function(event) {
+    // Make sure to preventDefault on a submit event.
+    event.preventDefault();
+  
+    // Get the ID by finding an element with a "name" attribute equal to the string "id"
+    var id = $("[name=id]").val().trim();
+    console.log(id);
+
+    var updatedemployee = {
+      first_name: $("#updateemployee [name=first_name]").val().trim(),
+      last_name: $("#updateemployee [name=last_name]").val().trim(),
+      role_id: $("#updateemployee [name=role_id]").val().trim(),
+      manager_id: $("#updateemployee [name=manager_id]").val().trim()
+    };
+
+    // Send the PUT request.
+    $.ajax("/api/employees/" + id, {
+      type: "PUT",
+      data: updatedemployee
+    }).then(
+      function() {
+        console.log("updated id ", id);
+        // Reload the page to get the updated list
+        location.reload();
+      }
+    );
+  });
+</script>
