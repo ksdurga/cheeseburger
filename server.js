@@ -22,7 +22,7 @@ var connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "root",
-  database: "employee_trackerDB"
+  database: "cheeseburgerDB"
 });
 
 connection.connect(function(err) {
@@ -35,16 +35,16 @@ connection.connect(function(err) {
 });
 
 app.get("/", function(req, res) {
-  connection.query("SELECT * FROM employees;", function(err, data) {
+  connection.query("SELECT * FROM burgers;", function(err, data) {
     if (err) {
       return res.status(500).end();
     }
-    res.render("index", { employees:data });
+    res.render("index", { burgers:data });
   });
 });
 
-app.post("/api/employees", function(req, res) {
-  connection.query("INSERT INTO employees SET first_name = ?, last_name = ?, role_id = ?, manager_id = ?", [req.body.first_name, req.body.last_name, req.body.role_id, req.body.manager_id], function(err, result) {
+app.post("/api/burgers", function(req, res) {
+  connection.query("INSERT INTO burgers SET name = ?", req.body.name, function(err, result) {
     if (err) {
       return res.status(500).end();
     }
@@ -56,8 +56,8 @@ app.post("/api/employees", function(req, res) {
 });
 
 // Update a movie
-app.put("/api/employees/:id", function(req, res) {
-  connection.query("UPDATE employees SET first_name = ?, last_name = ?, role_id = ?, manager_id = ? WHERE id = ?", [req.body.first_name, req.body.last_name, req.body.role_id, req.body.manager_id, req.params.id], function(err, result) {
+app.put("/api/burgers/:id", function(req, res) {
+  connection.query("UPDATE burgers SET first_name = ?, last_name = ?, role_id = ?, manager_id = ? WHERE id = ?", [req.body.first_name, req.body.last_name, req.body.role_id, req.body.manager_id, req.params.id], function(err, result) {
     if (err) {
       // If an error occurred, send a generic server failure
       return res.status(500).end();

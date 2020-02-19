@@ -23,9 +23,9 @@
       <div class="card">
         <div class="card-body">
           <h1>Brgrs to Eat</h1>
-          {{#each burgers if eaten=false}}
+          {{!-- {{#each burgers if eaten=false}}
 
-          {{/each}}
+          {{/each}} --}}
         </div>
       </div>
     </div>
@@ -34,8 +34,8 @@
       <div class="card">
         <div class="card-body">
           <h1>Brgrs Eaten</h1>
-          {{#each burgers}}
-          {{/each}}
+          {{!-- {{#each burgers}}
+          {{/each}} --}}
         </div>
       </div>
     </div>
@@ -43,23 +43,20 @@
 </div>
 
 <script>
-  $("#createemployee").on("submit", function(event) {
+  $("#createburger").on("submit", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
 
     // [name=employee] will find an element with a "name" attribute equal to the string "employee"
-    var newemployee = {
-      first_name: $("#createemployee [name=first_name]").val().trim(),
-      last_name: $("#createemployee [name=last_name]").val().trim(),
-      role_id: $("#createemployee [name=role_id]").val().trim(),
-      manager_id: $("#createemployee [name=manager_id]").val().trim()
+    var newburger = {
+      name: $("#createburger [name=name]").val().trim()
     };
 
     // Send the POST request.
-    $.post("/api/employees", newemployee)
+    $.post("/api/burgers", newburger)
     .then(
       function() {
-        console.log("created new employee");
+        console.log("created new burger");
         // Reload the page to get the updated list
         location.reload();
       }
