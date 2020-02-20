@@ -55,9 +55,10 @@ app.post("/api/burgers", function(req, res) {
   });
 });
 
-// Update a movie
+
 app.put("/api/burgers/:id", function(req, res) {
-  connection.query("UPDATE burgers SET first_name = ?, last_name = ?, role_id = ?, manager_id = ? WHERE id = ?", [req.body.first_name, req.body.last_name, req.body.role_id, req.body.manager_id, req.params.id], function(err, result) {
+  console.log(req.params.id)
+  connection.query("UPDATE burgers SET eaten = ? WHERE id = ?", [req.body.eaten, req.params.id], function(err, result) {
     if (err) {
       // If an error occurred, send a generic server failure
       return res.status(500).end();

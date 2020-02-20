@@ -23,9 +23,11 @@
       <div class="card">
         <div class="card-body">
           <h1>Brgrs to Eat</h1>
-          {{!-- {{#each burgers if eaten=false}}
-
-          {{/each}} --}}
+          {{#unless eaten}}
+            {{#each burgers}}
+              <p>{{this.name}}   <button type="submit" class="btn btn-primary updateburger" data-brgrid="{{this.id}}">Eat the Burger!</button></p>
+            {{/each}}
+          {{/unless}}
         </div>
       </div>
     </div>
@@ -34,8 +36,11 @@
       <div class="card">
         <div class="card-body">
           <h1>Brgrs Eaten</h1>
-          {{!-- {{#each burgers}}
-          {{/each}} --}}
+          {{#if eaten}}
+            {{#each burgers}}
+              <p>{{this.name}}</p>
+            {{/each}}
+          {{/if}}
         </div>
       </div>
     </div>
@@ -47,7 +52,7 @@
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
 
-    // [name=employee] will find an element with a "name" attribute equal to the string "employee"
+    // [name=name] will find an element with a "name" attribute equal to the string "burger"
     var newburger = {
       name: $("#createburger [name=name]").val().trim()
     };
@@ -63,30 +68,24 @@
     );
   });
 
-  $("#updateemployee").on("submit", function(event) {
+  $(".updateburger").on("click", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
   
     // Get the ID by finding an element with a "name" attribute equal to the string "id"
-    var id = $("[name=id]").val().trim();
+    var id = $(this).data("brgrid");
     console.log(id);
-
-    var updatedemployee = {
-      first_name: $("#updateemployee [name=first_name]").val().trim(),
-      last_name: $("#updateemployee [name=last_name]").val().trim(),
-      role_id: $("#updateemployee [name=role_id]").val().trim(),
-      manager_id: $("#updateemployee [name=manager_id]").val().trim()
-    };
-
+    let updatedbrgr = {eaten: 1};
+    console.log(updatedbrgr)
     // Send the PUT request.
-    $.ajax("/api/employees/" + id, {
+    $.ajax("/api/burgers/" + id, {
       type: "PUT",
-      data: updatedemployee
+      data: updatedbrgr
     }).then(
       function() {
         console.log("updated id ", id);
         // Reload the page to get the updated list
-        location.reload();
+        //location.reload();
       }
     );
   });
