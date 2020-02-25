@@ -1,22 +1,15 @@
-// Dependencies
-// =============================================================
+module.exports = function (sequelize, Datatypes){
 
-// This may be confusing but here Sequelize (capital) references the standard library
-var Sequelize = require("sequelize");
-// sequelize (lowercase) references our connection to the DB.
-var sequelize = require("../config/connection.js");
+  // As a best practice, the definition you give to the model (in quotes below) should be the same as the model name. Sequelize derives the table name by lowercasing and pluralizing whatever you put here.
 
-// Creates a "Burger" model that matches up with DB
-let Burger = sequelize.define("Burger", {
-    name: Sequelize.STRING,
+  // Newer versions of sequalize use TINYINT instead of Boolean values, hence using TINYINT(1) below.
+
+  var Burger = sequelize.define("Burger", {
+    name: Datatypes.STRING,
     eaten: {
-      type: Sequelize.BOOLEAN,
+      type: Datatypes.BOOLEAN,
       default: 0
     }
   });
-
-// Syncs with DB
-Burger.sync();
-
-// Makes the Burger Model available for other files (will also create a table)
-module.exports = Burger;
+  return Burger;
+}

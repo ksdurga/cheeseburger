@@ -10,7 +10,7 @@
   <h4 align="center">Add a burger</h4>
 
   <form id="createburger" class="button-size" align="center">
-    <input type="text" name="name" placeholder="brgr here"></textarea>
+    <input type="text" name="name" placeholder="brgr here" data-id="id"></textarea>
     </br>
     </br>
     <button type="submit" class="btn btn-primary">Save Burger</button>
@@ -51,14 +51,13 @@
   $("#createburger").on("submit", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
-
     // [name=name] will find an element with a "name" attribute equal to the string "burger"
     var newburger = {
-      name: $("#createburger [name=name]").val().trim()
+      name: $("#createburger [name=name]").val().trim(),
     };
-
+    
     // Send the POST request.
-    $.post("/api/burgers", newburger)
+    $.post("/api/burger", newburger)
     .then(
       function() {
         console.log("created new burger");
@@ -78,7 +77,7 @@
     let updatedbrgr = {eaten: 1};
     console.log(updatedbrgr)
     // Send the PUT request.
-    $.ajax("/api/burgers/" + id, {
+    $.ajax("/api/eatburger/" + id, {
       type: "PUT",
       data: updatedbrgr
     }).then(

@@ -6,7 +6,7 @@
 let Sequelize = require("sequelize");
 
 // Creates mySQL connection using Sequelize, the empty string in the third argument spot is our password.
-let sequelize = new Sequelize("sequelize_burgers", "root", "root", {
+let sequelize = new Sequelize("burgers", "root", "root", {
   host: "localhost",
   port: 3306,
   dialect: "mysql",
@@ -17,5 +17,5 @@ let sequelize = new Sequelize("sequelize_burgers", "root", "root", {
   }
 });
 
-// Exports the connection for other files to use
+// Exports the sequelize for other files to use
 module.exports = sequelize;

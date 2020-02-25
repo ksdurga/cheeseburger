@@ -1,37 +1,59 @@
-let Burger = require("../models/burger.js");
-const path = require("path")
-module.exports = function(app){
-  
+var db = require("../models");
 
-app.get("/", function(req, res) {
-  Burger.findAll({}).then(result => {
-    res.sendfile(path.join(__dirname, result));
+
+module.exports = function(app) {
+
+  app.get("/", function(req, res) {
+    // query the database to get all the burgers
+    db.Burger.findAll({}).then( burgers => {
+      // Create two empty arrays; one for eaten burgers and one
+      // for the uneaten ones
+      // const eaten = [];
+      // const uneaten = [];
+      // // sort the burgers by eaten or not
+      // burgers.forEach( burger => {
+      //   if( burger.eaten === 1 ){
+      //     eaten.push({ id: burger.id, burger: burger.name, status: 1 })
+      //   } else {
+      //     uneaten.push({ id: burger.id, burger: burger.name, status: 0 })
+      //   }
+      // });
+      res.render('index', burgers);
+    });
   });
-});
 
-app.post("/api/burgers", function(req, res) {
-  Burger.create({
-    name: req.body.name,
-  }).then(function(results) {
-    // `results` here would be the newly created chirp
-    res.end();
+  // Adds a new burger to the database
+  app.post("/api/burger", function(req, res) {
+
+    // Use sequelize to update the burger's eaten column from false to true. Remember all post data is stored in req.body
+
+    // Newer versions of sequalize use TINYINT instead of Boolean values, hence using 0 below.
+    db.Burger.create({
+      name: req.body.name,
+      eaten: 0
+    }).then(function(insertedRow){
+      res.json(insertedRow);
+    });
   });
 
-});
 
+  // Changes burger from uneaten to eaten
+  app.put("/api/eatburger/:id", function(req, res) {
+    console.log("eat me")
+    // Use sequelize to update the burger's eaten column
+    // Newer versions of sequalize use TINYINT instead of Boolean values, hence using 1 below.
 
-app.put("/api/burgers/:id", function(req, res) {
-  console.log(req.params.id)
-  connection.query("UPDATE burgers SET eaten = ? WHERE id = ?", [req.body.eaten, req.params.id], function(err, result) {
-    if (err) {
-      // If an error occurred, send a generic server failure
-      return res.status(500).end();
-    }
-    else if (result.changedRows === 0) {
-      // If no rows were changed, then the ID must not exist, so 404
-      return res.status(404).end();
-    }
-    res.status(200).end();
-
+    // Remember we get the id value via the url param referenced in the wildcard above as req.params.id
+    db.Burger.update(
+      {eaten: req.body.eaten},
+      {where: {
+        id: req.params.id
+      }}
+    ).then(function(rowsUpdated){
+      res.json(rowsUpdated);
+    });
   });
-})};
+
+}
+
+
