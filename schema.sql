@@ -1,13 +1,4 @@
-DROP DATABASE IF EXISTS cheeseburgerDB;
+DROP DATABASE IF EXISTS sequelize_burgers;
 
--- Create the database cheeseburgerDB and specified it for use.
-CREATE DATABASE cheeseburgerDB;
-
-USE cheeseburgerDB;
-
-CREATE TABLE burgers (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(30) NOT NULL,
-  eaten BOOLEAN DEFAULT false,
-  PRIMARY KEY (id)
-);
+-- Create the database sequelize_burgerDB and specified it for use.
+CREATE DATABASE sequelize_burgers;

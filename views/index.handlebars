@@ -23,11 +23,11 @@
       <div class="card">
         <div class="card-body">
           <h1>Brgrs to Eat</h1>
-          {{#unless eaten}}
-            {{#each burgers}}
+          {{#each burgers}}
+            {{#unless eaten}}
               <p>{{this.name}}   <button type="submit" class="btn btn-primary updateburger" data-brgrid="{{this.id}}">Eat the Burger!</button></p>
-            {{/each}}
-          {{/unless}}
+            {{/unless}}
+          {{/each}}
         </div>
       </div>
     </div>
@@ -36,11 +36,11 @@
       <div class="card">
         <div class="card-body">
           <h1>Brgrs Eaten</h1>
-          {{#if eaten}}
-            {{#each burgers}}
+          {{#each burgers}}
+            {{#if eaten}}
               <p>{{this.name}}</p>
-            {{/each}}
-          {{/if}}
+            {{/if}}
+          {{/each}}
         </div> 
       </div>
     </div>
